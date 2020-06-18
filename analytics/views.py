@@ -1,4 +1,5 @@
 import datetime
+import random
 from django.shortcuts import render,HttpResponse
 from django.views.generic import TemplateView,View
 from django.db.models import Sum,Avg,Count
@@ -10,12 +11,33 @@ class SaleViewAjax(View):
     def get(self,request, *args, **kwargs):
         data={}
         if request.user.is_staff:
+            qs = Order.objects.all().by_weeks_range(weeks_ago=10, numbers_of_weeks=10)
+            days=7
+            startdate=timezone.now().today()-datetime.timedelta(days=days-1)
+            datetime_list=[]
+            labels=[]
+            sales_item=[]
+            for x in range(0,days):
+                new_time=startdate+datetime.timedelta(days=x)
+                datetime_list.append(new_time)
+                labels.append(new_time.strftime("%a"))
+                new_qs=qs.filter(timestamp__day=new_time.day,timestamp__month=new_time.month)
+                day_total=new_qs.total_data()["total__sum"]or 0
+                sales_item.append(day_total)
             if request.GET.get('type')=='week':
-                data['labels'] = ['Monday', 'Tuesday','Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
-                data['data']=[123,131,2302,12,323,313,4290]
+                data['labels'] = labels
+                data['data']=sales_item
             if request.GET.get('type') == '4weeks':
-                data['labels'] = ['last week', 'one week ago', '2 weeks ago', '3 weeks ago', '4 weeks ago',]
-                data['data'] = [123, 131, 2302, 12, 323]
+                data['labels'] = ['4 weeks ago','3 weeks ago', '2 weeks ago', 'last weeks ', 'this week ago', ]
+                current=5
+                data['data']=[]
+                for i in range(0,5):
+                    new_qs=qs.by_weeks_range(weeks_ago=current,numbers_of_weeks=1)
+                    sales_total=new_qs.total_data()["total__sum"]
+                    if sales_total is None:
+                        sales_total=0
+                    data['data'].append(sales_total)
+                    current-=1
         return JsonResponse(data)
 class SaleView(TemplateView):
     template_name = 'analytics/sales.html'
