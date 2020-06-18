@@ -1,0 +1,60 @@
+{% extends 'base.html'%}
+
+{% block content%}
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1>Bootstrap Tutorial</h1>
+    <p>Bootstrap is the most popular HTML, CSS...</p>
+  </div>
+</div>
+
+<div class="row">
+	<div class="col-sm-2 col-md-2  mr-auto  order">
+			<div class="sidenav" role="alert" style="min-height: 200px;">
+		this
+	       </div>
+	</div>
+	<div class="col">
+		<div class="alert alert-secondary" role="alert" style="min-height: 200px;">
+										one
+	    </div>
+	</div>
+
+	<div class="col">
+		<div class="alert alert-secondary" role="alert" style="min-height: 200px;">
+										two
+	    </div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-sm-2  " >
+			<div  class="sidenav" role="alert" style="min-height: 1000px;">
+		this sidebar
+	       </div>
+		</div>
+	<div class="col">
+		<div class="alert alert-secondary" role="alert" style="min-height: 1000px;">
+			<div class="row">
+			 {% for obj in object_list%}
+        		<div class="col " style="margin-left: 1%; margin-bottom: 2%;" >
+                       {% include 'medecine/snippets/card.html' with instance=obj%}
+                       {% if forloop.counter|divisibleby:3%}
+                </div>
+            </div>
+            <div class="row">
+            	<div class="col-lg-12">
+            		<hr>
+            	</div>
+            </div>
+                       {% else %}
+                </div>
+                       {% endif %}
+                 
+  
+             {%endfor%}
+         </div>
+	    </div>
+	</div>
+</div>
+{% endblock %}

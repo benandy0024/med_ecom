@@ -1,0 +1,60 @@
+{%extends 'new_base.html'%}
+{% load static%}
+{%block content%}
+<div class="container   " style="margin-top: 10%;"> 
+
+
+<div class="row">
+    {%if cart.cartitem_set.exists%}
+  <div class="col-lg-12">
+    <div class="box-element">
+      <a href="{% url 'products:list'%}" class="btn btn-outline-dark">&#x2190; Continue Shopping</a>
+      <br>
+      <br>
+      <table class="table">
+        <tr>
+          <th><h5>Items:</h5> <strong>{{request.session.cart_items}}</strong></th>
+          <th><h5>Total:</h5> <strong>${{cart.total|floatformat:2}}</strong></th>
+          <th><a href="{%url 'Payments:home'%}" style="float: right;margin: 5px;" class="btn btn-success">Process Payment</a></th>
+        </tr>
+      </table>
+    </div>
+    <br>
+    <div class="box-element">
+      
+      <div class="cart-row">
+        <div style="flex:2"></div>
+        <div style="flex:2"><strong>Item</strong></div>
+        <div style="flex:1"><strong>price</strong></div>
+        <div style="flex:1"><strong>Quantity</strong></div>
+        <div style="flex:1"><strong>Remove</strong></div>
+      </div>
+        {%for prod in cart.cartitem_set.all%}
+      <div class="cart-row">
+        <div style="flex:2"><img class="row-image" src="{{prod.products.image.url}}"></div>
+        <div style="flex:2">{{prod.products}} </div>
+        <div style="flex:1">${{prod.products.price|floatformat:2}}</div>
+        <div style="flex:1">
+          <p class="quantity">{{prod.quantity}}</p>
+          <div class="quantity">
+          <img class="chg-quantity" src="{%static 'images/arrow-up.png'%}">
+          <img class="chg-quantity" src="{%static 'images/arrow-down.png'%}">
+          </div>
+        </div>
+        <div style="flex:1">
+          <span class="glyphicon glyphicon-shopping-cart"></span>
+          <a href="{%url 'carts:update' prod.products.slug%}?qty=0">remove</a></td>
+        </div>
+      </div>
+      {% endfor%}
+    </div>
+      {% else %}
+<p class="lead"> <h5>Cart is empty </h5></p>
+
+{%endif%}
+  </div>
+</div>
+</div>
+{%endblock%}
+
+

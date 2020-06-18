@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css?family=Monda&display=swap');
+
+body{
+  background-color:#bfbfbf; 
+}
+
+
+.navbar {
+ background-color: #16a085;
+ height: 10%;
+ color: white;
+ font-size: 20px;
+font-family: 'Monda', sans-serif;
+}
+.navbar-brand {
+    float: left;
+    height: 50px;
+    padding: 15px 15px;
+    font-size: 8px;
+    font-family: 'Monda', sans-serif;
+    line-height: 20px;
+}
+
+
+.navbar-nav .nav-link {
+    color: red;
+}
+.navbar-inverse {
+    background-color: red;
+    border-color: #080808;
+    padding:10px;
+}
+  .my-sidebar{
+
+background-color: skyblue;
+margin-top: -20px;
+}
+
+.sidenav {
+  /*height: auto;
+  width: 30px;*/
+  position: relative;
+  z-index: 1;
+  /*top: 0;
+  left: 0;*/
+  background-color:  #16a085;
+  overflow-x: hidden;
+  padding-top: 20px;
+ 
+}
+
+/*.sidenav a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 25px;
+  color:;
+  display: block;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}*/
+
+
+/*@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}*/
+/*#product car*/
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  margin: auto;
+  text-align: center;
+  font-family: arial;
+}
+
+.price {
+  color: grey;
+  font-size: 22px;
+}
+input[type=button], input[type=submit], input[type=reset] {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 16px 20px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+/*input[type=number], input[type=submit], input[type=reset] {
+  border-radius: 2px;
+   padding:10,10,10px;
+}
+*/
+.card button {
+  border: none;
+  outline: 0;
+  padding: 12px;
+  color: white;
+  background-color: #16a085;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+}
+
+.card button:hover {
+  opacity: 0.7;
+}
+
+.like {
+  font-size: 1.5rem;
+}
+
+/*footer*/
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: red;
+  color: white;
+  text-align: center;
+}

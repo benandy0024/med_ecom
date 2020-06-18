@@ -1,0 +1,91 @@
+{% extends 'admin_base.html'%}
+{%block content%}
+<div class="main-content">
+			<div class="title">
+				Product List
+                <form method="get" class="navbar-form navbar-right" role="search" style="width:50%;" >
+                    <div class="form-group input-group">
+                      <input type="text" class="form-control" name="q" placeholder="Search..">
+                          <span class="input-group-btn">
+                            <button class="btn btn-dark mx-2" type="submit">
+                              <span class="glyphicon glyphicon-search">search</span>
+                            </button>
+                          </span>
+                  </div>
+      </form>
+			</div>
+
+
+				<div class="product_table">
+<!--					<div class="title">Number of likes</div>-->
+                      <div class="table-responsive">
+					<div class="chart">
+
+                        <table class="table " id="myTable">
+                           <thead class="thead" id="Thead">
+                            <th>No</th>
+                            <th>Customer</th>
+                            <th>Order ID</th>
+                            <th>Cart ID</th>
+
+                            <th>Total Price</th>
+                           <th>Status</th>
+                           <th>Date & Time</th>
+
+                            </thead>
+                            <tbody>
+
+                            <tr>
+                                {%for order in order_qs%}
+                                <td>{{forloop.counter}}</td>
+                                <td><a href="{% url 'administration:order-detail' order.id %}">{{order.cart.user}}</a></td>
+
+                                <td><a href="{% url 'administration:order-detail' order.id %}">{{order}}</a></td>
+                                <td>{{order.cart}}</td>
+
+
+
+
+
+                                    <td>{{order.cart.total}}</td>
+                                 <td>{{order.status}}</td>
+                                <td>{{order.timestamp}}</td>
+                            </tr>
+                            {%endfor%}
+                            </tbody>
+
+                                </table>
+                            <!--pagination-->
+        <div class="pagination" style="justify-content: center;" >
+    <span class="step-links">
+        {% if order_qs.has_previous %}
+
+            <a class= "btn btn-outline-dark"  href="?page={{ order_qs.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ order_qs.number }} of {{ order_qs.paginator.num_pages }}.
+        </span>
+
+        {% if order_qs.has_next %}
+            <a class="btn btn-outline-dark" href="?page={{ order_qs.next_page_number }}">next</a>
+
+        {% endif %}
+    </span>
+</div>
+
+
+        <!--end pagination-->
+
+
+
+
+                        </div>
+
+                    </div>
+				</div>
+
+{%endblock%}
+
+
+

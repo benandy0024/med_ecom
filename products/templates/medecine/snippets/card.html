@@ -1,0 +1,64 @@
+
+
+<div class="col-lg-3  " style="padding-top:2%;">
+    <div class="flip-card">
+    <div class="flip-card-inner" >
+
+<div class="flip-card-front">
+    {%if instance.image%}
+    <div class="inner">
+        <img class="thumbnail" src="{{instance.image.url}}">
+    </div>
+    {%endif%}
+    <div class="box-element product">
+      <h6><strong>{{instance.title}}</strong></h6>
+        <p><strong>{{instance.description}}</strong></p>
+      <hr>
+        <p>by<strong> {{instance.company_name}}</strong></p>
+        <hr>
+      <a href="{{instance.get_absolute_url}}" data-product={{product.id}} data-action="add" class="btn btn-outline-success add-btn update-cart">Add to Cart</a>
+    <!--   <a href="{{instance.get_absolute_url}}"class="btn btn-outline-success ">View</a> -->
+
+      <h4 style="display: inline-block; float: right;">${{instance.price|floatformat:2}}</h4>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+    </div>
+</div>
+
+<!--<div class="col">-->
+<!--<div class="card-container" >-->
+<!--  {%if instance.image%}-->
+<!--    <div class="inner">-->
+<!--        <img class="thumbnail" src="{{instance.image.url}}">-->
+<!--    </div>-->
+<!--    {%endif%}-->
+
+<!--          <div class="card-body text-center">-->
+<!--            <h5 class="card-title"> <strong>{{instance.title}}</strong></h5>-->
+<!--            <p class="card-text ">${{instance.price|floatformat:2}} </p>-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--         <div class="card card-back" >-->
+<!--          <img src="{{instance.image.url}}" class="card-img-top" alt="...">-->
+
+<!--          <div class="card-body">-->
+
+<!--            <a href="{{instance.get_absolute_url}}"class="btn btn-outline-success btn-block ">Add to Cart</a>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--</div>-->
+<!--</div>-->

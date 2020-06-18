@@ -1,0 +1,93 @@
+{% extends 'admin_base.html'%}
+{%block content%}
+
+
+<div class="main-content">
+			<div class="title">
+				Product List
+                   <form method="get" class="navbar-form navbar-right" role="search" style="width:50%;" >
+                    <div class="form-group input-group">
+                      <input type="text" id="myInput" class="form-control" name="q" placeholder="Search..">
+                          <span class="input-group-btn">
+                            <button class="btn btn-dark mx-2" type="submit">
+                              <span class="glyphicon glyphicon-search">search</span>
+                            </button>
+                          </span>
+                  </div>
+                 </form>
+
+			</div>
+            
+
+				<div class="product_table">
+<!--					<div class="title">Number of likes</div>-->
+                      <div class="table-responsive">
+					<div class="chart">
+
+                        <table class="table " id="myTable">
+                           <thead class="thead" id="Thead">
+                            <th>No</th>
+                            <th>Product Name</th>
+                            <th>Product Description</th>
+                            <th>Price</th>
+                            <th>Company</th>
+                            <th>category</th>
+
+                            <th colspan="2">Action</th>
+                            </thead>
+                            <tbody id="myTable">
+
+                            <tr>
+                                {%for obj in object_list%}
+                                <td>{{forloop.counter}}</td>
+                                <td>{{obj.title}}</td>
+                                <td>{{obj.description}}</td>
+                                <td>{{obj.price}}</td>
+                                   <td>{{obj.company_name}}</td>
+                                {%for cat in obj.category.all%}
+                                <td>{{cat}}</td>
+                                <td><a href="{% url 'administration:update' obj.slug %}" type="button">Update</a></td>
+                                 <td><a href="{% url 'administration:delete' obj.slug %}" type="button">Delete</a></td>
+                                {%endfor%}
+
+                            </tr>
+                            {%endfor%}
+                            </tbody>
+                                </table>
+                         <!--pagination-->
+        <div class="pagination my-4" style="justify-content: center;" >
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+
+            <a class= "btn btn-outline-dark"  href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{  page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if  page_obj.has_next %}
+            <a class="btn btn-outline-dark" href="?page={{  page_obj.next_page_number }}">next</a>
+
+        {% endif %}
+    </span>
+</div>
+
+                        </div>
+
+                    </div>
+
+				</div>
+
+<script>
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
+
+{%endblock%}

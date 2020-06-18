@@ -1,0 +1,63 @@
+{% extends 'new_base.html'%}
+{% load static%}
+
+{% block content %}
+<div class="jumbotron jumbotron-fluid" style="background-color: purple;">
+  <div class="container">
+    <h1>Bootstrap Tutorial</h1>
+    <p>Bootstrap is the most popular HTML, CSS...</p>
+  </div>
+</div>
+<div class="container" >
+
+
+
+
+
+ <div class="row">
+
+ <div class="col-sm-3" style="background-color: #16a085;margin-left:5;text-align:left;color: #fff;font-size: 25px; padding-top:5%; ">
+          <h5 style="color: #fff;">PRODUCT CATEGORIES</h5>
+      <hr>
+
+            {%for item in cat%}
+
+                    {{item}}</b><br>
+
+
+
+            {%endfor%}
+</div>
+
+<div class="col-sm-9"  style="background-color: ">
+ <div class="row">
+
+  {% for obj in qs%}
+
+            <!-- {{forloop.counter}} -->
+{% include 'medecine/snippets/card.html' with instance=obj%}
+
+{%endfor%}
+   </div>
+    </div>
+   </div>
+
+  </div>
+
+
+
+
+
+
+   {%endblock%}
+
+</html>
+<div class="row">
+
+  {% for obj in object_list%}
+
+            <!-- {{forloop.counter}} -->
+{% include 'medecine/snippets/card.html' with instance=obj%}
+
+{%endfor%}
+   </div>

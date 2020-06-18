@@ -1,0 +1,65 @@
+  {% load static %}
+  {% url 'products:home' as home_url  %}
+{% url 'products:list' as list_url %}
+{% url 'contact' as contact_url %}
+{% url 'accounts:login' as login_url %}
+{% url 'accounts:logout' as logout_url %}
+{% url 'accounts:register' as register_url %}
+  {% url 'accounts:account' as account_url %}
+{% url 'carts:cart_view' as cart_url %}
+<div class="container">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top ">
+    <a class="navbar-brand" href="{{home_url}}"><span><i class="fa fa-flask "></i></span>Benaphar</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+      <div class="collapse navbar-collapse text-center " id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item {%if request.path == home_url%}active{%endif%}">
+        <a class="nav-link" href="{{home_url}}">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item {%if request.path == list_url%}active{%endif%}">
+        <a class="nav-link" href="{{list_url}}">Product</a>
+
+
+
+      {%if request.user.is_authenticated%}
+      <li class="nav-item {%if request.path == contact_url%}active{%endif%}">
+        <a class="nav-link " href="{{contact_url}}" tabindex="-1" aria-disabled="true">Contact</a>
+      </li>
+       <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Account
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="{{account_url}}">Home</a>
+          <a class="dropdown-item" href="#">Billing</a>
+          <a class="dropdown-item" href="#">Config</a>
+          <a class="dropdown-item" href="#">History</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item"  href="{{logout_url}}">Logout</a>
+        </div>
+      </li>
+
+
+
+      {% else%}
+         <li class="nav-item {%if request.path == login_url%}active{%endif%}">
+        <a class="nav-link " href="{{login_url}}" tabindex="-1" aria-disabled="true">Login</a>
+      </li>
+      <li class="nav-item {%if request.path == register_url%}active{%endif%}">
+        <a class="nav-link " href="{{register_url}}" tabindex="-1" aria-disabled="true">register</a>
+      </li>
+      {%endif%}
+        </li>
+         <li class="nav-item {%if request.path == cart_url%}active{%endif%}">
+        <a class="nav-link " href="{{cart_url}}"> <span class="navbar-cart-count"> {{request.session.cart_items}}</span> <span><i class="fa fa-cart-plus"></i></span></a>
+      </li>
+
+    </ul>
+  </div>
+    </div>
+  </nav>
+</div>
+  <br>  

@@ -1,0 +1,55 @@
+{%extends 'base.html'%}
+{%block content%}
+<h1>Carts</h1>
+{%if cart.cartitem_set.exists%}
+<table class="table cart-table" colspan="2">
+  <thead>
+    <tr>
+        <th scope="col">#</th>
+      <th scope="col">Product Name</th>
+        <th scope="col">Product Quantity</th>
+         <th scope="col">Product Price</th>
+         <th scope="col">Action</th>
+
+    </tr>
+  </thead>
+  <tbody class="cart-body">
+    <tbody class="cart-body">
+  {%for prod in cart.cartitem_set.all%}
+    <tr class='cart-product'>
+          <td scope="row">{{forloop.counter}}</td>
+        <td><h4><a href="{{product.get_absolute_url}}">{{prod.products}}</a></h4>
+        </td>
+          <td>{{prod.quantity}}</td>
+       <td>{{prod.products.price}}</td>
+            <td ><a href="{%url 'carts:update' prod.products.slug%}?qty=0">remove</a></td>
+    </tr>
+  {%endfor%}
+
+    <tr>
+      <td colspan="3"></td>
+
+      <td><b>Subtotal</b> <span class="cart-subtotal"> ${{cart.subtotal}}</span></td>
+
+    </tr>
+      <tr>
+      <td colspan="3"></td>
+
+      <td><b>total</b> <span class="cart-total"> ${{cart.total}}</span></td>
+
+    </tr>
+    <tr>
+      <td colspan="3"></td>
+    <td><a class="btn  btn-success" href="{%url 'carts:checkout'%}">Checkout</a></td>
+
+
+    </tr>
+
+  </tbody>
+</table>
+
+
+{% else %}
+<p class="lead"> Cart is empty</p>
+{%endif%}
+{%endblock%}

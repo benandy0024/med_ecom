@@ -1,0 +1,80 @@
+{% extends 'admin_base.html'%}
+{%block content%}
+<div class="main-content my-3">
+			<div class="title">
+				Order detail of {{instance.cart.user}}
+
+
+			</div>
+
+
+				<div class="product_table">
+<!--					<div class="title">Number of likes</div>-->
+                      <div class="table-responsive">
+					<div class="chart">
+
+                        <table class="table " id="myTable">
+                           <thead class="thead" id="Thead">
+                            <th>No</th>
+                             <th>Quantity</th>
+                            <th>Products</th>
+                            <th>Category</th>
+                              <th> Price</th>
+                            <th>Total Price</th>
+
+
+                            </thead>
+                            <tbody>
+
+                            <tr>
+                                {%for orders in instance.cart.cartitem_set.all%}
+                                <td>{{forloop.counter}}</td>
+                                <td>{{orders.quantity}}</td>
+                                <td>{{orders}}</td>
+                                <td>
+
+
+                                      {%for x in orders.products.category.all%}
+                                      {{x}}
+                                      {%endfor%}
+                                </td>
+                                <td>${{orders.products.price}}</td>
+                                <td>${{orders.cart.total}}</td>
+
+                            </tr>
+                            {%endfor%}
+                            </tbody>
+
+                                </table>
+
+
+
+
+
+                        </div>
+
+                    </div>
+				</div>
+
+{%endblock%}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{{instance.cart.cartitem_set.all}}
+{{instance.cart.cartitem_set.all.price}}
+{%for x in instance.cart.cartitem_set.all%}
+{{x.quantity}}
+{{x.products.price}}
+{%endfor%}

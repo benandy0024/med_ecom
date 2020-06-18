@@ -1,0 +1,11 @@
+{% extends 'admin_base.html'%}
+{%block content%}
+<div class="container">
+<h3>Are you sure you want to delete {{product}}</h3>
+<form action=""method="post">
+    {%csrf_token%}
+    <a href="{%url 'administration:list'%}">Cancel</a>
+    <input class="btn btn-primary" type="submit" name="confirm">
+</form>
+</div>
+{%endblock%}

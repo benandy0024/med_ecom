@@ -1,0 +1,119 @@
+{% url 'administration:add' as add_url %}
+
+<style>
+			.ad {
+				position: absolute;
+				width: 300px;
+				height: 250px;
+				border: 1px solid #ddd;
+				left: 50%;
+				transform: translateX(-50%);
+				top: 250px;
+				z-index: 10;
+			}
+			.ad .close {
+				position: absolute;
+				font-family: 'ionicons';
+				width: 20px;
+				height: 20px;
+				color: #fff;
+				background-color: #999;
+				font-size: 20px;
+				left: -20px;
+				top: -1px;
+				display: table-cell;
+				vertical-align: middle;
+				cursor: pointer;
+				text-align: center;
+			}
+		</style>
+		<script type="text/javascript">
+			
+			$(document).ready(function() {
+	$('.nav-trigger').click(function() {
+		$('.side-nav').toggleClass('visible');
+	});
+});
+		</script>
+		<script type="text/javascript">
+
+			$(function() {
+				$('.close').click(function() {
+					$('.ad').css('display', 'none');
+				})
+			})
+
+
+
+		</script>
+
+	</head>
+
+	<body style="background-color: #d5dae5;">
+		<div class="header">
+			<div class="logo">
+				<i class="fa fa-flask "></i>
+				<span>Benaphar</span>
+			</div>
+			<a href="#" class="nav-trigger"><span></span></a>
+		</div>
+		<div class="side-nav">
+			<div class="logo">
+				<i class="fa fa-flask "></i>
+				<span>Benaphar</span>
+			</div>
+			<nav>
+				<ul>
+					<li>
+						<a href="#">
+							<span><i class="fa fa-user"></i></span>
+							<span>Users</span> 
+						</a>
+					</li>
+					<li data-toggle="modal" data-target="#myModal">
+						<a href="{{add_url}}" >
+
+							<span><i class="fa fa-tablets"></i></span>
+							<span>Add Product</span>
+						</a>
+					</li>
+
+
+
+
+
+
+					<li>
+						<a href="{%url 'administration:list'%}">
+
+							<span><i class="fa fa-eye"></i></span>
+							<span>view product</span>
+						</a>
+					</li>
+					<li>
+						<a href="{%url 'administration:view_order'%}">
+
+							<span><i class="fa fa-envelope"></i></span>
+							<span>view Orders</span>
+						</a>
+					</li>
+
+
+
+					<li class="active">
+						<a href="#">
+							<span><i class="fa fa-bar-chart"></i></span>
+							<span>Analytics</span>
+						</a>
+					</li>
+					<li>
+						<a href="">
+							<span><i class="fa fa-credit-card-alt"></i></span>
+							<span>Payments</span>
+						</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+
+

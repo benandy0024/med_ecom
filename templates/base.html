@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+     {% load staticfiles %}
+     <link rel="stylesheet" type="text/css" href="{%static 'try.css'%}">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script src="https://js.stripe.com/v3/"></script>
+
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+   
+   <!--  jquery confirm -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+<!-- django secure ajax -->
+
+  <script src="my_static/csrf.ajax.js"></script>
+
+</head>
+
+  <body style="background-color:#f2f2f2;">
+{%include 'base/navbar.html'%}
+
+
+
+</style>
+   <div class="container" style="margin-top:5%;">
+      {%block content%}
+    {% endblock %}
+   </div>
+   {%include 'base/footer.html'%}
+ {% include 'base/js.html'%}
+ <script type="text/javascript">
+ $(document).ready(function(){
+  //contact form handler
+  var contactForm=$(".contact-form")
+  var contactFormMethod=contactForm.attr("method")
+  var contactFormEndpoint=contactForm.attr("action")
+  contactForm.submit(function(event){
+    event.preventDefault()
+    var contactFormData=contactForm.serialize()
+    var thisForm=$(this)
+    $.ajax({
+      method:contactFormMethod,
+      url:contactFormEndpoint,
+      data:contactFormData,
+      success:function(data){
+          contactForm[0].reset()
+            $.alert({
+              title:"Ooops",
+              content:data.message,
+              theme:"modern",
+            })
+      },
+      error:function(error){
+        console.log(error.responseJSON)
+        var jsonData=error.responseJSON
+        var msg=""
+        $.each(jsonData,function(key,value){
+          msg+=key+ ":" + value[0].message + "<br/>"
+        })
+            $.alert({
+              title:"Ooops",
+              content:msg,
+              theme:"modern",
+            })
+      }
+    })
+  })
+  //Autosearch
+  var searchForm=$(".search-form")
+  var searchInput=$("[name='q']")
+  var typingTimer;
+  var typingInterval=500
+  var searchBtn=searchForm.find("[type='submit']")
+
+  searchInput.keyup(function(event){
+    // console.log(searchInput.val())
+    //key released
+    clearTimeout(typingTimer)
+    typingTimer=setTimeout(performSearch,typingInterval,5000)
+  })
+
+  searchInput.keydown(function(event){
+    //key pressed
+     clearTimeout(typingTimer)
+
+  })
+
+  function displaySearch(){
+     searchBtn.addClass("disabled")
+    searchBtn.html("< i class='fa fa-spin fa-spinner'></i> searching...")
+  }
+
+
+  function performSearch(){
+   displaySearch()
+  var query=searchInput.val()
+  setTimeout(function(){
+    window.location.href="/search/?q="+ query
+  },1000)
+
+    }
+
+
+
+
+
+  //cart + products
+  var productForm=$('.form-product-ajax')
+  productForm.submit(function(event){
+    event.preventDefault();
+    console.log('form is not sending')
+    var thisForm=$(this);
+    // var actionEndpoint=thisForm.attr("action");
+     var actionEndpoint=thisForm.attr("data-endpoint");
+    var httpMethod=thisForm.attr("method");
+    var formData=thisForm.serialize();
+    // console.log(thisForm.attr("action"),thisForm.attr("method"))
+    $.ajax({
+      url:actionEndpoint,
+      method:httpMethod,
+      data:formData,
+
+      success:function(data){
+
+          var submitSpan=thisForm.find(".submit-span")
+           if (data.added){
+            submitSpan.html(" In cart <button type='submit' class='btn btn-link'>Remove?</button>")
+           }
+           else{
+            submitSpan.html(" <button type='submit' class='btn btn-success'>Add to Cart</button>")
+           }
+          var navbarCount = $(".navbar-cart-count")
+          navbarCount.text(data.cartItemCount)
+          var currentPath=window.location.href
+          if(currentPath.indexOf("cart") != -1){
+           refreshCart()
+          }
+
+      },
+      error:function(errorData){
+            $.alert({
+              title:"Ooops",
+              content:"error occured",
+              theme:"modern",
+            })
+
+      }
+    })
+
+
+  })
+
+  function refreshCart(){
+    console.log("in current cart")
+    var cartTable=$(".cart-table")
+    var cartBody=cartTable.find(".cart-body")
+    // cartBody.html("<h1>Changed</h1>")
+    var productRows=cartBody.find(".cart-product")
+    var currentUrl=window.location.href
+
+
+    var refreshCartUrl='/api/cart'
+    var refreshCartMethod="GET";
+    var data={};
+    $.ajax({
+
+      url:refreshCartUrl,
+      method:refreshCartMethod,
+      data:data,
+      success:function(data){
+        console.log("success")
+        console.log(data)
+        var hiddenCartItemRemoveForm=$(".cart-item-remove-product")
+        if(data.products.length>0){
+            productRows.html(" ")
+            i=data.products.length
+            $.each(data.products, function(index,value){
+              console.log(value)
+              var newCartItemRemove=hiddenCartItemRemoveForm.clone()
+              newCartItemRemove.css("display","block")
+              newCartItemRemove.find(".cart-item-product-id").val(value.id)
+              cartBody.prepend("<tr><th scope=\"row\">" + i + "</th><td><a href='' "+value.Url+"'>" + value.name+ "</a>"+ newCartItemRemove.html()+ "</td><td>" + value.price + "</td></tr>")
+              i--
+            })
+            cartBody.find(".cart-subtotal").text(data.subtotal)
+             cartBody.find(".cart-total").text(data.total)
+        }
+        else{
+            window,location.href=currentUrl
+        }
+      },
+      error:function(errorData){
+           $.alert({
+              title:"Ooops",
+              content:"error occured",
+              theme:"modern",
+            })
+      }
+    })
+
+
+
+  }
+
+ })
+ </script>
+
+  </body>
+</html>

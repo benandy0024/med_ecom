@@ -1,0 +1,179 @@
+{%include 'new_base.html'%}
+{% block content%}
+<script>
+ 
+$(document).ready(function(){
+    // body...
+       function renderChart(id,data,labels) {
+        // body...
+var ctx =$('#' + id);
+var myChart = new Chart(ctx, {
+    type: 'radar',
+    data: {
+        labels: labels,
+        datasets: [{
+            label: 'Sales',
+            data: data,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                 'rgba(153, 102, 255, 1)',
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+    }
+    function getSaleData(id,type) {
+        // body...
+        var url="/analytic/sales/data"
+        var method='GET'
+        var data={"type":type}
+        $.ajax({
+            url: url,
+            method: method,
+            data: data,
+            success: function(responseData){
+                renderChart(id, responseData.data, responseData.labels)
+            }, error: function(error){
+                $.alert("An error occurred")
+            }
+        })
+
+    }
+    // getSaleData("thisWeekSales","Week")
+    // getSaleData("fourWeekSales","4Weeks")
+    var chartsToRender =$(".my-render-chart")
+    $.each(chartsToRender,function(index,html){
+        var $this=$(this)
+        if ($this.attr('id')&&$this.attr('data-type')) {
+                getSaleData($this.attr('id'),$this.attr('data-type'))
+        }
+        
+    })
+    
+})
+
+
+
+</script>
+<div class="container" style="margin-top:5%;">
+
+<div class="row">
+    <div class="col-lg-4">
+        <h3>Today's sale </h3>
+
+        <h4>Recent Total :${{today.recent_data.total__sum}}</h4>
+
+        {% for order in today.recent%}
+
+            {{forloop.counter}}
+            {{order.order_id}}
+            {{order.total}}
+            {{order.timestamp}}<br>
+
+        {%endfor%}
+        <hr>
+        <h3>paid total:${{today.paid_data.total__sum}}</h3>
+{% for order in today.paid%}
+{{forloop.counter}}
+{{order.order_id}}
+    {{order.total}}
+    {{order.timestamp}}
+
+<br>
+
+{%endfor%}
+        <hr>
+
+           <h3>This Week sale </h3>
+<h4>Recent Total :${{this_week.recent_data.total__sum}}</h4>
+
+{% for order in this_week.recent%}
+
+    {{forloop.counter}}
+    {{order.order_id}}
+    {{order.total}}
+    {{order.timestamp}}<br>
+
+{%endfor%}
+
+    <hr>
+<h3>paid total:${{this_week.paid_data.total__sum}}</h3>
+{% for order in this_week.paid%}
+{{forloop.counter}}
+{{order.order_id}}
+    {{order.total}}
+    {{order.timestamp}}
+
+
+
+{%endfor%}
+
+    </div>
+     <div class="col-lg-8">
+       <canvas class="my-render-chart" id="thisWeekSales" data-type='week' width="400" height="400"></canvas>
+
+    </div>
+</div>
+    <hr>
+  <div class="row">
+     <div class="col">
+        <h3>Previous Four Weeks Sales </h3>
+<h4>Recent Total :${{past_four_weeks.recent_data.total__sum}}</h4>
+
+{% for order in past_four_weeks.recent|slice:":5"%}
+
+    {{forloop.counter}}
+    {{order.order_id}}
+    {{order.total}}
+    {{order.timestamp}}<br>
+
+{%endfor%}
+
+    <hr>
+    <h3>paid total:${{past_four_weeks.paid_data.total__sum}}</h3>
+{% for order in past_four_weeks.paid|slice:":5"%}
+{{forloop.counter}}
+{{order.order_id}}
+    {{order.total}}
+    {{order.timestamp}}
+
+<br>
+
+{%endfor%}
+    </div>
+    <div class="col-lg-8">
+       <canvas  class="my-render-chart" id="fourWeekSales" data-type='4weeks'width="400" height="400"></canvas>
+
+    </div>
+</div>
+
+
+
+</div>
+
+
+{%endblock%}

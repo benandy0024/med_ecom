@@ -1,0 +1,49 @@
+{% extends 'admin_base.html'%}
+{%block content%}
+ {% load staticfiles %}
+{% load crispy_forms_tags %}
+
+	<style type="text/css">
+		@media screen and (min-width: 800px){
+			.formDiv{
+				display: flex;
+				justify-content: center;
+				align-items: ce
+			}
+
+			#MyForm{
+				width: 50%;
+			}
+		}
+	</style>
+<div class="main-content">
+
+
+			<div class="main">
+				<div class="add-product-form">
+					<div class="title">
+				Add Product
+			</div>
+<!--					<div class="title">Number of views</div>-->
+							<div class="formDiv" >
+						 <form action=""method="post" enctype="multipart/form-data" id="MyForm">
+							{%csrf_token%}
+							{{form|crispy}}
+							<button class="btn btn-success my-3" type="submit">Add</button>
+						 </form>
+							</div>
+
+				</div>
+
+
+			</div>
+		</div>
+
+
+{%endblock %}
+
+		 <form action=""method="post" enctype="multipart/form-data"style="left: 500px;">
+                {%csrf_token%}
+                {{form|crispy}}
+                <button class="btn btn-success my-3" type="submit">Add</button>
+            </form>

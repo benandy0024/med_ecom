@@ -1,0 +1,52 @@
+{%extends 'new_base.html'%}
+{%block content%}
+<div class="container"  style="margin-top:5%;height: ;">	
+  <div class="row">
+		<div class="col-lg-8">
+			<div class="box-element">
+
+				<a  class="btn btn-outline-dark" href="{% url 'products:list'%}">&#x2190; Continue Shopping</a>
+
+				<br>
+				<br>
+				<table class="table">
+					<tr>
+						<th>
+							<div class="col-lg-6">
+								{%if object.image%}
+					<img class="thumbnail" src="{{object.image.url}}">
+								{%endif%}
+					<div class="box-element product">
+						<h6><strong>{{object.description}}</strong></h6>
+						<hr>
+
+						  {%include 'medecine/snippets/update_cart.html' with product=object cart=cart%}
+						
+						
+
+			</div>
+		</div>
+						
+					</tr>
+				</table>
+
+			</div>
+
+			<br>
+			
+		</div>
+	</div>
+</div>
+{%endblock%}
+<div class="row">
+     <div class="col-6 col-md-6">
+{%if object.image%}
+<img src="{{object.image.url}}" alt="" class="img-fluid">
+{%endif%}
+<h3>{{object.description}}</h3><br>
+   </div>
+ <div class="col-6 col-md-6">
+     {%include 'medecine/snippets/update_cart.html' with product=object cart=cart%}
+<!--    <h2><a href="">Add to cart</a></h2>-->
+    </div>
+</div>

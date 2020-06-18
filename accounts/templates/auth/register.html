@@ -1,0 +1,61 @@
+{%extends 'auth/base.html'%}
+{% load crispy_forms_tags %}
+
+{%block content%}
+<script type='text/javascript'>
+    $(document).ready(function(){
+
+        $(".delete").click(function(){
+            alert("clicked!");
+        });
+    });
+</script>
+  <div id="register">
+        <div class="container">
+            <div id="register-row" class="row justify-content-center align-items-center">
+                <div id="register-column" class="col-md-6">
+                    <div id="register-box" class="col-md-12">
+                        {% for message in messages%}
+                        <h3 class="text-center text-info txt">
+                            {{message}}
+                        </h3>
+                        {%endfor%}
+                        <form id="register-form" class="form" action="" method="post">
+                            <h3 class="text-center text-info">Register</h3>
+                                 {%csrf_token%}
+                            <div class="form-group">
+                                <label for="fname" class="text-info">First Name:</label><br>
+                                <input type="text" name="fname" id="fname" class="form-control">
+                            </div>
+                             <div class="form-group">
+                                <label for="lname" class="text-info">Last Name:</label><br>
+                                <input type="text" name="lname" id="lname" class="form-control">
+                            </div>
+                             <div class="form-group">
+                                <label for="pharma" class="text-info">Pharmacy:</label><br>
+                                <input type="text" name="pharma" id="pharma" class="form-control">
+                            </div>
+                             <div class="form-group">
+                                <label for="username" class="text-info">E-mail:</label><br>
+                                <input type="email" name="email" id="email" class="form-control">
+                            </div>
+                             <div class="form-group">
+                                <label for="pass" class="text-info">Password</label><br>
+                                <input type="password" name="pass" id="pass" class="form-control">
+                            </div>
+                             <div class="form-group">
+                                <label for="cpass" class="text-info">Confirm Password:</label><br>
+                                <input type="password" name="cpass" id="cpass" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="remember-me" class="text-info text-right"><span>Remember me</span> <span><input id="remember-me" name="remember-me" type="checkbox"></span></label><br>
+                                <input type="submit" name="submit" class="btn btn-outline-info btn-md" value="submit">
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

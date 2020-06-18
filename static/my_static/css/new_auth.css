@@ -1,0 +1,52 @@
+  body {
+  margin: 0;
+  padding: 0;
+  background-color: #16a085;
+  height: 100vh;
+}
+.bg-dark{
+	background-color: #f!important;
+	color:red;
+
+}
+.navbar-brand{
+
+  color:#16a085!important;
+}
+#register .container #register-row #register-column #register-box {
+  margin-top: 120px;
+  max-width: 600px;
+  height: 680px;
+  border: 1px solid #9C9C9C;
+  background-color: #fff;
+}
+#login .container #login-row #login-column #login-box {
+  margin-top: 120px;
+  max-width: 600px;
+  height: 320px;
+  border: 1px solid #9C9C9C;
+  background-color: #fff;
+}
+
+#login .container #login-row #login-column #login-box #login-form {
+  padding: 20px;
+}
+#login .container #login-row #login-column #login-box #login-form #register-link {
+  margin-top: -85px;
+}
+/*.my_img{
+  position: fixed;
+  height: 100%;
+  left: 0;
+  bottom:0;
+  z-index: -1;
+}
+.container{
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  grid-gap: 7rem;
+  padding: 0.2rem;
+
+}*/

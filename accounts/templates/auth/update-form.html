@@ -1,0 +1,28 @@
+{%extends 'auth/base.html'%}
+{% load crispy_forms_tags %}
+
+{%block content%}
+
+  <div id="register">
+        <div class="container">
+            <div id="register-row" class="row justify-content-center align-items-center">
+                <div id="register-column" class="col-md-6">
+                    <div id="register-box" class="col-md-12">
+                        <form id="register-form" class="form" action="" method="post">
+                            {%if title%}<h3 class="text-center text-info">{{title}}</h3>{%endif%}
+                                 {%csrf_token%}
+                                 {{form|crispy}}
+                            <div class="form-group">
+                                    <a href="{%url 'accounts:password_change' %}" class="text-info"><h6>Change password</h6></a>
+                                <input type="submit" name="submit" class="btn btn-outline-info btn-md" value="save">
+                            </div>
+                            <div id="register-link" class="text-right">
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

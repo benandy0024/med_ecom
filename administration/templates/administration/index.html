@@ -1,0 +1,77 @@
+{% extends 'admin_base.html'%}
+
+{% block content%}
+<script type="text/javascript">
+function toggleSideBar() {
+	document.getElementById('side-nav').classList.toggle('active')
+}
+</script>
+<!-- <div class="header">
+    <div class="logo">
+        <i class="fa fa-tachometer"></i>
+        <span>Brand</span>
+    </div>
+    <a href="#" class="nav-trigger"><span></span></a>
+</div> -->
+
+<div class="side-nav" id="side-nav">
+	   <div class="logo">
+        <i class="fa fa-tachometer"></i>
+        <span>Brand</span>
+    </div>
+    <div class="toggle-btn" onclick="toggleSideBar()">
+    	<span></span>
+    	<span></span>
+    	<span></span>
+    </div>
+	<nav>
+		<ul>
+			<li>
+				<a href="">
+					<span><i class="fa fa-user"></i></span>
+					<span>User</span>
+				</a>
+			</li>
+			<li>
+				<a href="">
+					<span><i class="fa fa-envelope"></i></span>
+					<span>Message</span>
+				</a>
+			</li>
+			<li class="active">
+				<a href="">
+					<span><i class="fa fa-user"></i></span>
+					<span>Analyticts</span>
+				</a>
+			</li>
+		</ul>
+	</nav>
+</div>
+
+<div class="main-content">
+	<div class="container">
+<div class="card-deck">
+  <div class="card bg-primary">
+    <div class="card-body text-center">
+      <p class="card-text">Some text inside the first card</p>
+    </div>
+  </div>
+  <div class="card bg-warning">
+    <div class="card-body text-center">
+      <p class="card-text">Some text inside the second card</p>
+    </div>
+  </div>
+  <div class="card bg-success">
+    <div class="card-body text-center">
+      <p class="card-text">Some text inside the third card</p>
+    </div>
+  </div>
+  <div class="card bg-danger">
+    <div class="card-body text-center">
+      <p class="card-text">Some text inside the fourth card</p>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+{%endblock%}

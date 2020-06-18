@@ -1,0 +1,40 @@
+{% extends 'new_base.html'%}
+{% load static%}
+
+{% block content %}
+
+<div class="container" >
+
+
+
+
+
+ <div class="row">
+
+
+<div class="col-sm-12"  style="margin-top:10% ">
+    <div class="col-12 my-3">
+        <h1>Product View History</h1>
+        <hr>
+    </div>
+ <div class="row">
+
+  {% for obj in object_list%}
+
+            <!-- {{forloop.counter}} -->
+{% include 'medecine/snippets/card.html' with instance=obj.content_object%}
+
+{%endfor%}
+   </div>
+    </div>
+   </div>
+
+  </div>
+
+
+
+
+
+
+   {%endblock%}
+

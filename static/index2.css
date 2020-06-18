@@ -1,0 +1,19 @@
+body{
+margin:0;
+padding: 0;
+	background-color: red;
+}
+
+.header{
+	position: absolute;
+	height: 44px;
+	width: 100%;
+	background-color: red;
+}
+.side-nav{
+	position: absolute;
+	width: 100%;
+	background-color: green;
+	height:100vh;
+	padding-top: 44px;
+}

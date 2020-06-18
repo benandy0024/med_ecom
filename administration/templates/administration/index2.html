@@ -1,0 +1,35 @@
+{% extends 'admin_base.html'%}
+
+{% block content%}
+<script type="text/javascript">
+	
+	function openSlideMenu() {
+	document.getElementById('menu').style.width='250px';
+	document.getElementById('content').style.marginLeft='250px';
+}
+
+function closeSlideMenu() {
+	document.getElementById('menu').style.width='0';
+	document.getElementById('content').style.marginLeft='0';
+}
+</script>
+<div id="content">
+	<span class="slide">
+		<a href="" onclick="openSlideMenu()">
+			<i class="fas fa-bars"></i>
+		</a>
+	</span>
+
+	<div id="menu" class="nav">
+		<a href="" onclick=" closeSlideMenu()">
+			<i class="fas fa-times"></i>
+		</a>
+
+	  	<a href="">Home</a>
+	  	<a href="">about</a>
+	  	<a href="">Contact</a>
+	</div>
+	<h1>RESPONSIVE HOHWHIOBOWEBF0IF'FEOFH</h1>
+</div>
+
+{%endblock%}

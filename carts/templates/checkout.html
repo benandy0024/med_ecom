@@ -1,0 +1,35 @@
+{%extends 'new_base.html'%}
+{%block content%}
+{{object.order_id}}--{{object.cart}}
+{%if not billing_profile%}
+<div class="container">
+<div class="row text-center" >
+<div class="col-12 col-md-6">
+    login
+    {% include 'snippets/form.html' with form=login_form next_url=request.build_absolute_uri %}
+</div>
+<div class="col-12 col-md-6">
+  contine as guest
+             {% url 'guest_register' as guest_register_url%}
+      {%include 'snippets/form.html' with form=guest_form next_url=request.build_absolute_uri action_url=guest_register_url %}
+</div>
+</div>
+{%else%}
+
+           <h1>Finalize Checkout</h1>
+            <p>Cart Item:{%for product in object.cart.cartitem_set.all%}
+
+                {{product}},
+
+                {%endfor%}
+            </p>
+            <p>Cart Total: {{object.cart.total}}</p>
+            <p>Order Total: {{object.total}}</p>
+        <form action="" method="post">{%csrf_token%}
+
+            <button type="submit" class="btn btn-success">Finalize checkout</button>
+        </form>
+</div>
+
+{%endif%}
+{%endblock%}
