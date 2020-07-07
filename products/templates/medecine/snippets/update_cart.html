@@ -1,9 +1,9 @@
 
 <form action="{%url 'carts:update' product.slug %}">
       <div class="form-group">
-      		Qt
-   <input type="number" name="qty" value="1" style="width:40%" class= "form-control">
-    <input class="btn btn-success form-control my-2" type="submit" value="Add to cart" >
+          <label for="">Quantity</label>
+        <input type="number" name="qty" value="1" min="0" style="width:40%" class= "form-control text text-center">
+         <button class="btn btn-success form-control my-2" type="submit" value="Add to cart" > <i class="fa fa-shopping-basket" aria-hidden="true"></i> Add to cart</button>
    </div>
         </form>
       
