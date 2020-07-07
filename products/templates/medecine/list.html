@@ -69,7 +69,6 @@
 <div class="col-sm-12 justify-content-center"   style="background-color: ">
 
 <div class="row" style="margin-top:10%;"  >
-
     {%for category in instance.product_set.all%}
 {% include 'medecine/snippets/card.html' with instance=category%}
 {%endfor%}

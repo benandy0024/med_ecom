@@ -76,46 +76,21 @@ class ProductDetailView(ObjectViewedMixin,LoginRequiredMixin,DetailView):
         slug = self.kwargs.get('slug')
         try:
             instance = Product.objects.get(slug=slug)
+
         except Product.DoesNotExist:
 
             raise Http404("Not Found")
         except Product.MultipleObjectsReturned:
             #  get_by_id(slug) model manager method
             qs = Product.objects.get_by_id(slug)
+
             instance = qs.first()
+
         except:
             raise Http404('hmmmm')
 
         return instance
 
-# class MostViewedProduct(HitCountDetailView):
-#     queryset =  Product.objects.all()
-#     context_object_name = 'post'
-#     template_name = 'medecine/list.html'
-#     def get_context_data(self,*args, **kwargs,):
-#         context=super(MostViewedProduct, self).get_context_data(*args, **kwargs,)
-#         context.update({
-#             'popular_posts': Product.objects.order_by('-hit_count_generic__hits')[:3],
-#         })
-#         return context
-#
-#     #raise Http404 error
-#     def get_object(self, queryset=None, *args, **kwargs):
-#         request = self.request
-#         slug = self.kwargs.get('slug')
-#         try:
-#             instance = Product.objects.get(slug=slug)
-#         except Product.DoesNotExist:
-#
-#             raise Http404("Not Found")
-#         except Product.MultipleObjectsReturned:
-#             #  get_by_id(slug) model manager method
-#             qs = Product.objects.get_by_id(slug)
-#             instance = qs.first()
-#         except:
-#             raise Http404('hmmmm')
-#
-#         return instance
 
 def product_category(request,slug):
     #getting the 404 error

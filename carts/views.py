@@ -5,7 +5,7 @@ from accounts.forms import LoginForm,GuestForm
 from Billing.models import BillingProfile
 from accounts.models import GuestEmail
 from Payments.views import charge
-
+from django.contrib import messages
 # Create your views here.
 def cart_home(request):
     cart_obj, new_obj = Cart.objects.new_or_get(request)
@@ -14,8 +14,8 @@ def cart_home(request):
     for x in products:
         line_total = float(x.products.price) * x.quantity
         total += line_total
-    print(total)
-    print(cart_obj.total)
+    # print(total)
+    # print(cart_obj.total)
     cart_obj.total=total
     cart_obj.save()
 
@@ -30,18 +30,24 @@ def cart_update(request,slug):
     try:
         product_obj=Product.objects.get(slug=slug)
     except Product.DoesNotExist:
-        print('product out of stock')
+        # print('product out of stock')
         return redirect('carts:cart_view')
     cart_obj, new_obj = Cart.objects.new_or_get(request)
     cart_item, created = CartItem.objects.get_or_create(cart=cart_obj,products=product_obj )
     if created:
-            print('created')
+            pass# print('created')
     if  update_qty and qty :
         if int(qty)==0 :
             cart_item.delete()
+        # elif int(qty)<0:
+        #     redirect('carts:update')
+        #     messages.error(request,'you can not put negative value')
+
+            print("too  error")
         else:
             cart_item.quantity=qty
             cart_item.save()
+
     else:
         pass
         # if product_obj in cart_obj.items.all():
