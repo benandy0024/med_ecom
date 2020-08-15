@@ -217,6 +217,15 @@ body {
 	.main-content {
 		margin-left: 200px;
 	}
+	.widget4 {
+	flex-basis: 300px;
+	flex-grow: 10;
+	height: 400px;
+	margin: 15px;
+	border-radius: 6px;
+	background-color: #fff;
+	position: relative;
+}
 }
 
 /* main box container */
@@ -288,6 +297,7 @@ body {
 	border-radius: 6px;
 	background-color: #8000ff;
 	position: relative;
+	color: #fff;
 }
 .widget3 {
 	flex-basis: 300px;
@@ -296,6 +306,43 @@ body {
 	margin: 15px;
 	border-radius: 6px;
 	background-color: black;
+	position: relative;
+}
+
+.widget4 {
+	flex-basis: 300px;
+	flex-grow: 10;
+	height: 400px;
+	margin: 15px;
+	border-radius: 6px;
+	background-color: #fff;
+	position: relative;
+}
+.widget5{
+	flex-basis: 300px;
+	flex-grow: 10;
+	height: 300px;
+	margin: 15px;
+	border-radius: 6px;
+	background-color: white;
+	position: relative;
+}
+.widget6{
+	flex-basis: 300px;
+	flex-grow: 10;
+	height: 300px;
+	margin: 15px;
+	border-radius: 6px;
+	background-color: #fff;
+	position: relative;
+}
+.widget7{
+	flex-basis: 300px;
+	flex-grow: 10;
+	height: 300px;
+	margin: 15px;
+	border-radius: 6px;
+	background-color: #fff;
 	position: relative;
 }
 .widget .title {
@@ -313,3 +360,6 @@ body {
 	border: 1px solid #ddd;
 }
 
+#thisWeekSales{
+	
+}

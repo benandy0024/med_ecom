@@ -7,7 +7,9 @@ from carts.models import CartItem
 from django.core.paginator import Paginator,EmptyPage ,PageNotAnInteger
 # Create your views here.
 def home(request):
-    return render(request,'administration/home.html')
+    order_qs = Order.objects.all().count()
+    context={"order_qs":order_qs}
+    return render(request,'administration/home.html',context)
 def view_order(request):
     order_qs=Order.objects.all().order_by("-timestamp")
     cart_item_qs=CartItem.objects.all()

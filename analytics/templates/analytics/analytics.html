@@ -1,0 +1,373 @@
+{% extends 'admin_base.html'%}
+
+{% block content%}
+<script>
+
+$(document).ready(function(){
+    // body...
+       function renderChart(id,data,labels) {
+        // body...
+var ctx =$('#' + id);
+var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: labels,
+        datasets: [{
+            label: 'Sales',
+            data: data,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                 'rgba(153, 102, 255, 1)',
+            ],
+            borderWidth: 5,
+
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+    }
+    function getSaleData(id,type) {
+        // body...
+        var url="/analytic/sales/data"
+        var method='GET'
+        var data={"type":type}
+        $.ajax({
+            url: url,
+            method: method,
+            data: data,
+            success: function(responseData){
+                renderChart(id, responseData.data, responseData.labels)
+            }, error: function(error){
+                $.alert("An error occurred")
+            }
+        })
+
+    }
+    // getSaleData("thisWeekSales","Week")
+    // getSaleData("fourWeekSales","4Weeks")
+    var chartsToRender =$(".my-render-chart")
+    $.each(chartsToRender,function(index,html){
+        var $this=$(this)
+        if ($this.attr('id')&&$this.attr('data-type')) {
+                getSaleData($this.attr('id'),$this.attr('data-type'))
+        }
+
+    })
+
+})
+
+
+
+</script>
+
+
+<div class="main-content">
+			<div class="title">
+				Analytics
+			</div>
+
+			<div class="main">
+				<div class="widget1">
+					<div class="title">Number of Orders</div>
+					<div class="chart" style="padding:10px;">
+						<h1 style="font-size:4.5em;color:#fff;">{{order_qs}}</h1>
+						<i class="fa fa-shopping-cart" aria-hidden="true" style=" font-size: 9.5em;color: #fff;
+    text-shadow: 1px 1px 1px #ccc;"></i>
+					</div>
+				</div>
+				<div class="widget2">
+					<div class="title">Number of Product</div>
+					<div class="chart"><h1 style="font-size:4.5em;color:#fff;">{{product_qs}}</h1></div>
+				</div>
+				<div class="widget3">
+					<div class="title">Number of comments</div>
+					<div class="chart"></div>
+				</div>
+
+
+			</div>
+
+<!--		graph 1 start-->
+            <div class="widget4">
+					<div class="title"><h3>This Week sales Graph</h3></div>
+				<div class="row">
+					<div class="col">
+					<div class="chart">
+						<canvas class="my-render-chart" id="thisWeekSales" data-type='week' width="100" height="25"></canvas>
+
+					</div>
+
+					</div>
+
+				</div>
+			</div>
+<!--	end-->
+			<div class="main">
+
+				<div class="widget2">
+					<div class="title"><h3>Today's Sales</h3></div>
+					<div class="chart">
+						<table class="table table-striped" style="color:#fff;">
+					{%if today.recent.exists %}
+					   <thead>
+
+						  <tr>
+							<th>Order ID</th>
+							<th>Order Total</th>
+							<th>Date&Time</th>
+
+						  </tr>
+						</thead>
+						<tbody>
+						  <tr>
+							  {% for order in today.recent%}
+
+							<td>{{order.order_id}}</td>
+							<td>{{order.total}}</td>
+							<td>{{order.timestamp}}</td>
+						  </tr>
+							{%endfor%}
+						</tbody>
+					{%else%}
+					<p class="lead my-5 mx-5" ><h1 style="margin-left:20%;"> No Order Yet</h1></p>
+					{%endif%}
+					  </table>
+
+
+
+
+					</div>
+				</div>
+				<div class="widget1">
+					<div class="title">   <h3>paid total:
+
+						${{today.paid_data.total__sum}}
+
+					</h3>
+					</div>
+					<div class="chart">
+						<table class="table table-striped" style="color:#fff">
+					{%if today.paid.exists %}
+					   <thead>
+
+						  <tr>
+							<th>Order ID</th>
+							<th>Order Total</th>
+							<th>Date&Time</th>
+
+						  </tr>
+						</thead>
+						<tbody>
+						  <tr>
+							  {% for order in today.paid%}
+
+							<td>{{order.order_id}}</td>
+							<td>{{order.total}}</td>
+							<td>{{order.timestamp}}</td>
+						  </tr>
+							{%endfor%}
+						</tbody>
+					{%else%}
+					<p class="lead my-5 mx-5" ><h1 style="margin-left:20%;color:#fff"> No Sale Yet</h1></p>
+					{%endif%}
+					  </table>
+
+
+
+					</div>
+				</div>
+
+
+			</div>
+
+				<div class="main">
+
+				<div class="widget1">
+					<div class="title"><h3>This Week Sales</h3></div>
+					<div class="chart">
+						<table class="table table-striped" style="color:#fff">
+							{%if this_week.recent.exists %}
+					   <thead>
+						  <tr>
+							<th>Order ID</th>
+							<th>Order Total</th>
+							<th>Date&Time</th>
+
+						  </tr>
+						</thead>
+						<tbody>
+						  <tr>
+						 {% for order in this_week.recent%}
+
+							<td>{{order.order_id}}</td>
+							<td>{{order.total}}</td>
+							<td>{{order.timestamp}}</td>
+						  </tr>
+							{%endfor%}
+						</tbody>
+							{%else%}
+					<p class="lead my-5 mx-5" ><h1 style="margin-left:20%;color:#fff;"> No Sale Yet</h1></p>
+					{%endif%}
+					  </table>
+					</div>
+				</div>
+				<div class="widget2">
+						<div class="title">   <h3>paid total:
+
+						${{this_week.paid_data.total__sum}}
+
+					</h3>
+					</div>
+					<div class="chart">
+						<table class="table table-striped" style="color:#fff">
+							{%if this_week.paid.exists %}
+					   <thead>
+						  <tr>
+							<th>Order ID</th>
+							<th>Order Total</th>
+							<th>Date&Time</th>
+
+						  </tr>
+						</thead>
+						<tbody>
+						  <tr>
+						 {% for order in this_week.paid%}
+
+							<td>{{order.order_id}}</td>
+							<td>{{order.total}}</td>
+							<td>{{order.timestamp}}</td>
+						  </tr>
+							{%endfor%}
+						</tbody>
+							{%else%}
+					<p class="lead my-5 mx-5" ><h1 style="margin-left:20%;color:#fff;"> No Sale Yet</h1></p>
+					{%endif%}
+					  </table>
+
+
+
+					</div>
+				</div>
+
+
+			</div>
+<!--	graph 2 start-->
+	<div class="widget4">
+					<div class="title"><h3>Previous Four Weeks Sales</h3></div>
+					<div class="chart">
+ <canvas  class="my-render-chart" id="fourWeekSales" data-type='4weeks'width="100" height="25"></canvas>
+
+
+					</div>
+				</div>
+<!--end-->
+	<div class="main">
+<!--past 4 week recent block-->
+				<div class="widget2">
+					<div class="title"><h3>Previous 4 week Sales Graph</h3></div>
+					<div class="chart">
+						<table class="table table-striped" style="color:#fff;">
+							{%if past_four_weeks.recent.exists %}
+					   <thead>
+						  <tr>
+							<th>Order ID</th>
+							<th>Order Total</th>
+							<th>Date&Time</th>
+
+						  </tr>
+						</thead>
+						<tbody>
+						 {% for order in past_four_weeks.recent|slice:":5"%}
+						  <tr>
+
+							<td>{{order.order_id}}</td>
+							<td>{{order.total}}</td>
+
+							<td>{{order.timestamp}}</td>
+							  {%endfor%}
+
+						  </tr>
+
+						</tbody>
+					{%else%}
+					<p class="lead my-5 mx-5" ><h1 style="margin-left:20%;"> No Order Yet</h1></p>
+					{%endif%}
+					  </table>
+					</div>
+				</div>
+<!--		past 4 week paid block-->
+				<div class="widget7">
+					<div class="title">
+						<h3>Paid total:
+
+							${{past_four_weeks.paid_data.total__sum}}
+
+
+
+					</h3>
+
+
+					</div>
+					<div class="chart">
+						<table class="table table-striped">
+							{%if  past_four_weeks.paid.exists %}
+					   <thead>
+						  <tr>
+							<th>Order ID</th>
+							<th>Order Total</th>
+							<th>Date&Time</th>
+
+						  </tr>
+						</thead>
+						<tbody>
+						 {% for order in  past_four_weeks.paid|slice:":5"%}
+						  <tr>
+
+							<td>{{order.order_id}}</td>
+							<td>{{order.total}}</td>
+
+							<td>{{order.timestamp}}</td>
+							  {%endfor%}
+
+						  </tr>
+
+						</tbody>
+					{%else%}
+					<p class="lead my-5 mx-5" style="color:red;" ><h1 style="margin-left:20%; color:red;"> No Order Yet</h1></p>
+					{%endif%}
+					  </table>
+
+					</div>
+				</div>
+
+</div>
+
+
+
+
+
+		</div>
+
+{%endblock%}

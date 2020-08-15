@@ -6,6 +6,8 @@ from django.db.models import Sum,Avg,Count
 from Orders.models import Order
 from django.utils import timezone
 from django.http import JsonResponse,HttpResponse
+from Orders.models import Order
+from products.models import Product
 # Create your views here.
 class SaleViewAjax(View):
     def get(self,request, *args, **kwargs):
@@ -40,7 +42,7 @@ class SaleViewAjax(View):
                     current-=1
         return JsonResponse(data)
 class SaleView(TemplateView):
-    template_name = 'analytics/sales.html'
+    template_name = 'analytics/analytics.html'
     def dispatch(self, request, *args, **kwargs):
         user=self.request.user
         if  not user.is_staff:
@@ -51,10 +53,14 @@ class SaleView(TemplateView):
         context=super(SaleView, self).get_context_data( *args, **kwargs)
         # two_weeks_ago=timezone.now()-datetime.timedelta(days=14)
         # one_weeks_ago = timezone.now() - datetime.timedelta(days=7)
+        order_qs=Order.objects.count()
+        product_qs = Product.objects.count()
         qs=Order.objects.all().by_weeks_range(weeks_ago=10,numbers_of_weeks=10)
         context["today"]=qs.by_range(start_date=timezone.now().date()).get_sales_breakdown()
         context["this_week"]=qs.by_weeks_range(weeks_ago=1,numbers_of_weeks=1).get_sales_breakdown()
         context["past_four_weeks"]=qs.by_weeks_range(weeks_ago=5,numbers_of_weeks=4).get_sales_breakdown()
+        context['product_qs']=product_qs
+        context['order_qs'] = order_qs
 
 
         return context
