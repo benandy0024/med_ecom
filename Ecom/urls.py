@@ -18,9 +18,11 @@ from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
 from.views import index
+from products.views import category
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index,name='main_home'),
+    path('category',category ,name='category'),
     path('account/', include(("accounts.urls",'accounts'),namespace='accounts')),
 
     path('analytic/', include(("analytics.urls", 'analytics'), namespace='analytics')),

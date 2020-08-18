@@ -7,6 +7,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from hitcount.views import HitCountDetailView
 from django.core.paginator import Paginator,EmptyPage ,PageNotAnInteger
 from django.contrib.contenttypes.models import ContentType
+from analytics.models import ObjectViewed
+from django.db.models import Avg,Sum,Count
 # Create your views here.
 def home(request):
     qs=Product.objects.all()
@@ -18,6 +20,13 @@ def home(request):
         'cat':cat
     }
     return render(request,'medecine/home.html',context)
+def category(request):
+    cat=Category.objects.all()
+    context = {
+
+        'cat': cat
+    }
+    return render(request,'base/my_nav.html',context)
 class ProductListView(ListView):
     template_name = 'medecine/list_view.html'
     paginate_by = 8
@@ -29,7 +38,9 @@ class ProductListView(ListView):
     def get_context_data(self, *args, object_list=None, **kwargs):
         context = super(ProductListView, self).get_context_data(*args, **kwargs, )
         cat = Category.objects.all()
+        object_viewed=ObjectViewed.objects.all().annotate(x=Sum('content_type'))
         context['cat'] = cat
+        context['object_viewed']=object_viewed
         return context
         # search
 

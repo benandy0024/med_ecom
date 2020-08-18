@@ -171,12 +171,24 @@ footer{
 }
 .nav-pills {
  background-color: #16a085;
- margin-left:5;
  text-align:left;
- color: #fff;
- font-size: 25px; 
- padding-top:5%;
- 
+ text-decoration: none;
+ height: 400px;
+
+}
+.nav-pills li a{
+	text-decoration: none;
+	color: #fff;
+	line-height: 50px;
+	padding: 20px;
+}
+.nav-pills li a:hover{
+	text-decoration: none;
+	font-size: 25px;
+	transition: 5px;
+
+	
+	
 }
 
 /*card*/
@@ -198,13 +210,15 @@ footer{
   outline: 0;
   padding: 12px;
   color: white;
-  background-color: #000;
+  background-color:#16a085 ;
   text-align: center;
   cursor: pointer;
   width: 100%;
   font-size: 18px;
 }
-
+.card button a{
+ color: #fff;
+}
 .card button:hover {
   opacity: 0.7;
 }
@@ -214,9 +228,24 @@ footer{
 
 }
 
-@media(max-width:768 ){
-	
+@media(max-width: 858px){
+.nav-pills {
+ background-color: red;
+ text-align:left;
+ text-decoration: none;
+ height: 300px;
+ margin-top:50px;
+ width: 200px;
 }
-@media(max-width:576px; ){
-	
+}
+/*on mobile*/
+@media(max-width: 550px){
+.nav-pills {
+ background-color: #16a085;
+ text-align:left;
+ text-decoration: none;
+ height: 300px;
+ margin-top:50px;
+ width: 320px;
+}
 }
